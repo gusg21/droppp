@@ -1,0 +1,47 @@
+{
+    "output": "test/meta/_gen.cc",
+    "directories": [
+        {
+            "path": "test/",
+            "filter": ".*\\.h"
+        }
+    ],
+    "base_types": [
+        {
+            "name": "char",
+            "size": 1
+        },
+        {
+            "name": "uint8_t",
+            "size": 1
+        },
+        {
+            "name": "uint16_t",
+            "size": 2
+        },
+        {
+            "name": "uint32_t",
+            "size": 4
+        },
+        {
+            "name": "uint64_t",
+            "size": 8
+        },
+        {
+            "name": "float",
+            "size": 4
+        },
+        {
+            "name": "double",
+            "size": 8
+        },
+        {
+            "name": "short",
+            "size": 2
+        }
+    ],
+    "includes": [
+        "example.h",
+        "example2.h"
+    ]
+}
