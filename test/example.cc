@@ -7,9 +7,11 @@
 int main(int argc, char* argv[]) {
     printf("Hello World!\n");
 
-    Actor* actor = new Actor();
+    AOtherGuy* actor = new AOtherGuy();
     actor->x = 20.f;
-    void* x_data = droppp_meta_read_field(droppp_meta_get_field_by_name(&Actor_meta, "y", 2), actor);
+    actor->z = 30.f;
+
+    void* x_data = droppp_meta_read_field("z", 2, &AOtherGuy_meta, actor);
     printf("X: %.3f\n", *(float*)x_data);
 
     return 0;

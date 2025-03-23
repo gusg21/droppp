@@ -7,7 +7,7 @@ const struct droppp_meta_type_s {{ type.name }}_meta = {
         {
             .name = "{{ field.field_name }}",
             .type = &{{ field.type.name }}_meta,
-            .offset = (void*)offsetof({{ type.name }}, {{ field.field_name }}),
+            .offset = (void*)DROPPP_OFFSETOF({{ type.name }}, {{ field.field_name }}),
             .initialized = true,
             .is_array = {{ "true" if field.is_array else "false" }},
             .array_count = {{ field.count if field.is_array else 0 }}
@@ -15,5 +15,6 @@ const struct droppp_meta_type_s {{ type.name }}_meta = {
         {% endfor %}
     },
     {% endif %}
-    .size = sizeof({{ type.name }})
+    .size = sizeof({{ type.name }}),
+    .parent = {{ "&" + type.parent_type.name + "_meta" if type.parent_type else "NULL" }}
 };

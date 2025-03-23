@@ -24,9 +24,15 @@ class OtherExample {
 };
 DROPPP_REFLECT(OtherExample);
 
-class Actor {
+class AActor {
    public:
     float x;
     float y;
 };
-DROPPP_REFLECT(Actor);
+DROPPP_REFLECT(AActor);
+
+class AOtherGuy : public AActor {
+   public:
+    float z;
+};
+DROPPP_REFLECT(AOtherGuy);

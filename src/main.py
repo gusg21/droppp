@@ -73,6 +73,8 @@ class Type:
         self.fields: list[Field] = []
         self.resolved = False
         self.size = 0
+        self.parent_type_name = None
+        self.parent_type = None
 
     def add_fields_from_code(self, code: list[str], scope: Scope):
         for line_index in scope.get_contained_range():
@@ -91,6 +93,9 @@ class Type:
 
         # Filter out bad/unknown fields
         self.fields = list(filter(lambda field: field and field.type is not None, self.fields))
+
+        if self.parent_type_name:
+            self.parent_type = db.find_type(self.parent_type_name)
 
         self.resolved = True
 
@@ -243,6 +248,13 @@ class CodeFile:
                 else:
                     continue
 
+                if len(start_code_tokens) > 5:
+                    parent_type_name = start_code_tokens[4]
+                    if not parent_type_name in reflected_type_names:
+                        raise Exception("Unreflected base class")
+
+                    type_.parent_type_name = parent_type_name
+
                 type_.add_fields_from_code(code_lines, scope)
 
                 types.append(type_)
@@ -286,6 +298,8 @@ def main():
     os.makedirs(os.path.dirname(output_code_path), exist_ok=True)
     with open(output_code_path, "w+") as output_code_file:
         output_code_file.write(rendered_code)
+
+    print("Droppp complete")
     
 
 
