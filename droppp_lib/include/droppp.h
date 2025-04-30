@@ -29,7 +29,7 @@ struct droppp_meta_type_s {
 void* droppp_meta_read_field(const char* name, size_t name_length, const struct droppp_meta_type_s* type, void* object);
 
 #define DROPPP_REFLECT_STRUCT(struct_name) extern const struct droppp_meta_type_s struct_name##_meta
-#define DROPPP_REFLECT(class_name) extern const struct droppp_meta_type_s class_name##_meta
+#define DROPPP_REFLECT(class_name) const static struct droppp_meta_type_s meta;
 #define DROPPP_OFFSETOF(type, field) ((size_t)&((type*)0)->field)
 
 #endif  // DROPPP_H

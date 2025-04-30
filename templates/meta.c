@@ -5,9 +5,23 @@
 
 #include "droppp.h"
 
+{% for type in types %}
+// Reflecting {{ type.name }}
+{% endfor %}
+
 {% for include in includes %}
 #include "{{ include }}"
 {% endfor %}
+
+class BaseTypes {
+    public:
+    {% for type in types %}
+    {% if type.is_base() %}
+    static const struct droppp_meta_type_s {{ type.name }}_meta;
+    {% endif %}
+    {% endfor %}
+};
+
 
 {% for type in types %}
 {% include 'type.c' %}

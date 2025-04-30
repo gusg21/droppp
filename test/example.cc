@@ -5,14 +5,18 @@
 #include "droppp.h"
 
 int main(int argc, char* argv[]) {
-    printf("Hello World!\n");
+    // printf("Hello World!\n");
 
     AOtherGuy* actor = new AOtherGuy();
     actor->x = 20.f;
     actor->z = 30.f;
 
-    void* x_data = droppp_meta_read_field("z", 2, &AOtherGuy_meta, actor);
+    void* x_data = droppp_meta_read_field("x", 2, &AOtherGuy::meta, actor);
     printf("X: %.3f\n", *(float*)x_data);
+    *(float*)x_data = 90.0f;
+    printf("X: %.3f\n", *(float*)x_data);
+
+    
 
     return 0;
 }

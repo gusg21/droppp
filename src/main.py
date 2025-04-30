@@ -108,6 +108,9 @@ class Type:
                 size += field.get_size()
 
             return size
+        
+    def is_base(self):
+        return self.source == TypeSource.BUILTIN
 
 class TypeDBException(Exception):
     pass
@@ -187,8 +190,10 @@ class CodeFile:
         self.source_file_path = code_file_path
         with open(code_file_path, "r") as source_file:
             self.source_code = source_file.read()
+            print("Read from " + code_file_path)
         
         self.scopes = CodeFile._parse_scopes(self.source_code)
+        print("Searching " + self.source_file_path + " for marked types...")
         self.reflected_type_names = CodeFile._parse_reflected_type_names(self.source_code)
 
         self.types = CodeFile._parse_types_from_scopes(self.source_code, self.scopes, self.reflected_type_names)
@@ -199,9 +204,11 @@ class CodeFile:
         code_lines = code.splitlines()
 
         for line in code_lines:
-            result = re.match("DROPPP_REFLECT\(([A-Za-z_]+)\)", line)
+            result = re.search("DROPPP_REFLECT\(([A-Za-z_]+)\)", line)
             if result:
-                type_names.append(result.group(1))
+                type_name = str(result.group(1))
+                print(type_name)
+                type_names.append(type_name)
 
         return type_names
                 
@@ -279,7 +286,7 @@ def main():
         base_type_db.add_builtin_type(base_type["name"], base_type["size"])
 
     for directory in config_json["directories"]:
-        for root, dirs, files in os.walk(os.path.realpath(os.path.join(config_base_path, directory["path"]))):
+        for root, _, files in os.walk(os.path.realpath(os.path.join(config_base_path, directory["path"]))):
             for file in files:
                 if re.match(directory["filter"], file):
                     base_type_db.add_type_db(get_code_type_db(os.path.join(root, file))) 

@@ -6,6 +6,8 @@
 
 class Example {
    public:
+    DROPPP_REFLECT(Example);
+
     Example();
 
     uint32_t foo;
@@ -14,25 +16,27 @@ class Example {
 
     uint32_t getFoo();
 };
-DROPPP_REFLECT(Example);
 
 class OtherExample {
    public:
+    DROPPP_REFLECT(OtherExample);
+
     float thing2;
 
     Example otherThing;
 };
-DROPPP_REFLECT(OtherExample);
 
 class AActor {
    public:
+    DROPPP_REFLECT(AActor);
+
     float x;
     float y;
 };
-DROPPP_REFLECT(AActor);
 
 class AOtherGuy : public AActor {
    public:
+    DROPPP_REFLECT(AOtherGuy);
+
     float z;
 };
-DROPPP_REFLECT(AOtherGuy);
